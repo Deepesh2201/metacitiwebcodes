@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Auth\Registration;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Base\Constants\Auth\Role;
@@ -139,6 +140,37 @@ class ReferralController extends BaseController
         $reffered_user->user->notify(new AndroidPushNotification($title, $body));
 
         return $this->respondSuccess();
+    }
+    /* *
+        Get All driver referal
+    
+    * */
+    public function getDriverReferral(Request $request)
+    {
+        $my_reffered_user = $this->user->belongsTorole(Role::DRIVER)->where('driver_referred_by', auth()->user()->id)->get();
+
+        if (count($my_reffered_user) < 1) {
+           return $this->respondNoContent();
+        }
+
+        $driversData = [];
+        $timezone = auth()->user()->timezone?:env('SYSTEM_DEFAULT_TIMEZONE');
+
+        foreach($my_reffered_user as $user){
+
+           $converted_current_date = Carbon::parse($user->created_at)->setTimezone($timezone)->format('jS M Y');
+           $driversData[] = [
+                'name' => $user->name ??'',
+                'mobile' => $user->mobile ??'',
+                'timezone' => $timezone,
+                'joined_on_formated' => $converted_current_date,
+                'joined_on_without_formated' => $user->created_at ??'',
+                'is_active_driver' => $user->avtive ??'',
+           ];
+        }
+        return response()->json(['success'=>true,'message'=>'driver_referral_list','data'=> $driversData]);
+
+        // return $this->respondSuccess();
     }
 
 }
