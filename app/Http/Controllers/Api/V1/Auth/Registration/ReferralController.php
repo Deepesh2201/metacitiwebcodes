@@ -117,4 +117,46 @@ class ReferralController extends BaseController
 
         return $this->respondSuccess();
     }
+    /* *
+        Add driver referal code as mobile number
+    
+    * */
+    public function addDriverSignupReferral(Request $request)
+    {
+        $reffered_user = $this->user->belongsTorole(Role::DRIVER)->where('mobile', $request->refferal_mobile_num)->first();
+
+        if (!$reffered_user) {
+            $this->throwCustomException('Provided Referral mobile number does not exists to our databse', 'refferal_code');
+        }
+
+        // Update referred user's id to the users table
+        auth()->user()->update(['driver_referred_by'=>$reffered_user->id, 'referral_commission_for_driver' => get_settings('referral_commision_for_driver')?:0]);
+
+        // Add referral commission to the referred user
+        $reffered_user = $reffered_user->driver;
+
+        $driver_wallet = $reffered_user->driverWallet;
+        $referral_commision = get_settings('referral_commision_for_driver')?:0;
+
+        $driver_wallet->amount_added += $referral_commision;
+        $driver_wallet->amount_balance += $referral_commision;
+        $driver_wallet->save();
+
+        /* // Add the history
+        $reffered_user->driverWalletHistory()->create([
+            'amount'=>$referral_commision,
+            'transaction_id'=>str_random(6),
+            'remarks'=>WalletRemarks::REFERRAL_COMMISION,
+            'refferal_code'=>$reffered_user->refferal_code,
+            'is_credit'=>true]);
+ */
+        // Notify user
+        $title = trans('push_notifications.referral_earnings_notify_title',$reffered_user->lang);
+        $body = trans('push_notifications.referral_earnings_notify_body',$reffered_user->lang);
+
+        $reffered_user->user->notify(new AndroidPushNotification($title, $body));
+
+        return $this->respondSuccess();
+    }
+
 }

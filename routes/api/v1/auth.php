@@ -57,6 +57,7 @@ Route::namespace('Auth')->group(function () {
         // Update Referral code after signup
         Route::post('update/user/referral', 'ReferralController@updateUserReferral')->middleware('auth');
         Route::post('update/driver/referral', 'ReferralController@updateDriverReferral')->middleware('auth');
+        Route::post('update/driver-mobile-referral', 'ReferralController@addDriverSignupReferral')->middleware('auth');
         // Get Referral code
         Route::get('get/referral', 'ReferralController@index')->middleware('auth');
 
