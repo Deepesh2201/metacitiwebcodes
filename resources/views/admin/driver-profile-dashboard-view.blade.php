@@ -517,15 +517,74 @@
                 <!-- /.box -->
 
             </div>
+     </div>
+
+        <!-- Driver Referral -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="font-weight-600">@lang('view_pages.driver_referrals')</h3>
+                                <ul class="box-controls pull-right">
+                                    <li><a class="box-btn-close" href="#"></a></li>
+                                    <li><a class="box-btn-slide" href="#"></a></li>
+                                    <li><a class="box-btn-fullscreen" href="#"></a></li>
+                                </ul>
+                            </div>
+
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <table id="tickets" class="table mt-0 table-hover no-wrap table-striped table-bordered"
+                                        data-page-size="10">
+                                        <thead>
+                                            <tr class="bg-dark">
+                                                <th>@lang('view_pages.name')</th>
+                                                <th>@lang('view_pages.email')</th>
+                                                <th>@lang('view_pages.mobile')</th>
+                                                <th>@lang('view_pages.approve_status')</th>
+                                                <th>@lang('view_pages.joining_date')</th>
+                                                <th>@lang('view_pages.action')</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($driver_referrals as $referral)
+                                            <tr>
+                                                <td>{{$referral->name ?? ''}}</td>
+                                                <td>
+                                                    {{$referral->email }}
+                                                </td>
+                                                <td>
+                                                     {{$referral->mobile }}
+                                                </td>
+                                                
+                                                @if($referral->driver->approve)
+                                                <td><button class="btn btn-success btn-sm">{{ trans('view_pages.approved') }}</button></td>
+                                                @else
+                                                <td><button class="btn btn-danger btn-sm">{{ trans('view_pages.disapproved') }}</button></td>
+                                                @endif
+                                                <td>{{$referral->converted_created_at }}</td>
+                                                <td>
+                                                    <a href="{{url('driver_profile_dashboard_view', $referral->id)}}">@lang('view_pages.view_profile')</a>
+                                                </td>
+                                            </tr>
+                                             @endforeach
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-
+        </div>
 
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
-
-
                     <div class="col-12">
                         <div class="box">
                             <div class="box-header with-border">
@@ -590,7 +649,6 @@
 
         </div>
 
-        
 
         <!-- Shift History Starts here -->
         <!-- <div class="row">

@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'הפניות נהגים',
+  'joining_date' => 'תאריך הצטרפות',
   'back' => 'חזור',
   'loading' => 'טוען...',
   'icons' => 'אייקונים',

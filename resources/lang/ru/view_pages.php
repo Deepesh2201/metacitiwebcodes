@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Рекомендации водителей',
+  'joining_date' => 'Дата присоединения',
   'back' => 'Назад',
   'loading' => 'Загрузка...',
   'icons' => 'Иконки',

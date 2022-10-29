@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Sürücü Tavsiyeleri',
+  'joining_date' => 'Katılım Tarihi',
   'back' => 'Geri',
   'loading' => 'Yükleniyor...',
   'icons' => 'Simgeler',

@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Driver Referrals',
+  'joining_date' => 'Joining Date',
   'back' => 'Back',
   'loading' => 'Loading...',
   'icons' => 'Icons',

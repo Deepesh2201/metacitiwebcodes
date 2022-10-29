@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => '드라이버 추천',
+  'joining_date' => '가입 날짜',
   'back' => '뒤',
   'loading' => '로드 중...',
   'icons' => '아이콘',

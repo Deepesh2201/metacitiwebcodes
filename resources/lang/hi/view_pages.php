@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'चालक रेफरल',
+  'join_date' => 'जॉइनिंग डेट',
   'back' => 'पीछे',
   'loading' => 'लोड हो रहा है...',
   'icons' => 'माउस',

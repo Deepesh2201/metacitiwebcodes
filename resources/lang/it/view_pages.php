@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Riferimenti driver',
+  'joining_date' => 'Data di adesione',
   'back' => 'Di ritorno',
   'loading' => 'Caricamento in corso...',
   'icons' => 'Icone',

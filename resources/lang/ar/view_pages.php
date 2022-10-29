@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'joining_date' => 'تاريخ الانضمام',
+  'driver_referrals' => 'إحالات السائقين',
   'action' => 'عمل',
   'active' => 'نشيط',
   'add_admin' => 'إضافة مسؤول',

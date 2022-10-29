@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Fahrerempfehlungen',
+  'joining_date' => 'Beitrittsdatum',
   'action' => 'ein Beruf',
   'active' => 'Energiegeladen',
   'add_admin' => 'Fügen Sie einen Beamten hinzu',

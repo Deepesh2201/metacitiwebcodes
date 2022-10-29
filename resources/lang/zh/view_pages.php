@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => '司机推荐',
+  'joining_date' => '加入日期',
   'back' => '后退',
   'loading' => '正在加载...',
   'icons' => '图标',

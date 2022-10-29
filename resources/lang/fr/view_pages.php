@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Parrainages de chauffeurs',
+  'joining_date' => "Date d'adhésion",
   'back' => 'Retour',
   'loading' => 'Chargement...',
   'icons' => 'Icônes',

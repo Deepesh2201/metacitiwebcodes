@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'Referências de motoristas',
+  'joining_date' => 'Data de entrada',
   'status' => 'Estado',
   'action' => 'Acción',
   'search' => 'Búsqueda',

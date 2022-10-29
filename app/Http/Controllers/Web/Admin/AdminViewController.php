@@ -108,8 +108,8 @@ class AdminViewController extends BaseController
         // $default_lat = $firebase_request_detail["l"][0];
         // $default_lng = $firebase_request_detail["l"][1];
 
-         $default_lat = $zone->lat;
-        $default_lng = $zone->lng;
+         $default_lat = $zone->lat??'';
+        $default_lng = $zone->lng??'';
 
         $today = date('Y-m-d');
 
@@ -220,9 +220,10 @@ class AdminViewController extends BaseController
 
         
 
+        $driver_referrals = User::belongsTorole(Role::DRIVER)->where('driver_referred_by', $driver->user_id)->get();
 
         // dd($item);
-        return view('admin.driver-profile-dashboard-view')->with(compact('main_menu','sub_menu','item','totalTrips','todayTrips','todayEarning','totalEarning','wallet_amount','currency','overall_earning_card','overall_earning_wallet','overall_earning_cash','total_overall_earnings','overall_earning_cash_percent','overall_earning_card_percent','overall_earning_wallet_percent','overall_earning_commision','overall_earning_driver_commision','jan_overall_earning','feb_overall_earning','mar_overall_earning','apr_overall_earning','may_overall_earning','jun_overall_earning','jul_overall_earning','total_completedTrips','total_cancelledTrips','data','trip_info','history','default_lat','default_lng'));
+        return view('admin.driver-profile-dashboard-view')->with(compact('driver_referrals', 'main_menu','sub_menu','item','totalTrips','todayTrips','todayEarning','totalEarning','wallet_amount','currency','overall_earning_card','overall_earning_wallet','overall_earning_cash','total_overall_earnings','overall_earning_cash_percent','overall_earning_card_percent','overall_earning_wallet_percent','overall_earning_commision','overall_earning_driver_commision','jan_overall_earning','feb_overall_earning','mar_overall_earning','apr_overall_earning','may_overall_earning','jun_overall_earning','jul_overall_earning','total_completedTrips','total_cancelledTrips','data','trip_info','history','default_lat','default_lng'));
     }
 
     

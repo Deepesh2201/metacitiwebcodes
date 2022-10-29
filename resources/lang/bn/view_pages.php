@@ -1,6 +1,8 @@
 <?php
 
 return array (
+  'driver_referrals' => 'ড্রাইভার রেফারেল',
+  'joining_date' => 'যোগদানের তারিখ',
   'action' => 'চাকরি',
   'active' => 'অনলস',
   'add_admin' => 'একজন কর্মকর্তা যোগ করুন',
