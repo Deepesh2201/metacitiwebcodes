@@ -442,7 +442,7 @@ class LoginController extends ApiController
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
         event(new UserLogin($user));
-
+        $user->token()->revoke();
         if ($needsToken) {
             $client_tokens = DB::table('oauth_clients')->where('password_client', 1)->first();
             // dd($client_tokens);
@@ -512,6 +512,7 @@ class LoginController extends ApiController
      */
     protected function authenticateUser(User $user, $remember = false)
     {
+        // Auth::logoutOtherDevices($request('password'));
         auth('web')->login($user, $remember);
         // return view('admin.index');
         return $this->respondSuccess();

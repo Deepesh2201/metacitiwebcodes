@@ -13,6 +13,8 @@ trait AuthHelpers {
 	protected function otpLoginRoles() {
 		return [
 			Role::USER,
+			Role::OWNER,
+			Role::DRIVER
 		];
 	}
 
