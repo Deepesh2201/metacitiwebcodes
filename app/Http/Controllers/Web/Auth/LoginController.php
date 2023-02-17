@@ -216,7 +216,7 @@ class LoginController extends ApiController
         $emailOrUsername = $request->input($identifier);
 
         if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
-            dd($request);//->user()->token()->revoke();
+            $request->user()->token()->revoke();
             $user = $this->{$method}($emailOrUsername, $role);
         }
 
@@ -442,11 +442,7 @@ class LoginController extends ApiController
      */
     protected function authenticateAndRespond(User $user, $request, $needsToken = false)
     {
-<<<<<<< HEAD
         event(new UserLogin($user));
-=======
-        event(new UserLogin($user));       
->>>>>>> 8557a98b438ff39a12ddcb274175938510d235b1
         if ($needsToken) {
             $client_tokens = DB::table('oauth_clients')->where('password_client', 1)->first();
             // dd($client_tokens);
