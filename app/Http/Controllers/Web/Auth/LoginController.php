@@ -216,7 +216,7 @@ class LoginController extends ApiController
         $emailOrUsername = $request->input($identifier);
 
         if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
-            $request->user()->token()->revoke();
+            dd($request);//->user()->token()->revoke();
             $user = $this->{$method}($emailOrUsername, $role);
         }
 
