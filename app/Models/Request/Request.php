@@ -16,6 +16,8 @@ use Nicolaslopezj\Searchable\SearchableTrait;
 use App\Models\Admin\CancellationReason;
 use App\Models\Master\PackageType;
 use App\Models\Admin\Owner;
+use App\Models\Request\TripBids;
+
 
 class Request extends Model
 {
@@ -378,5 +380,14 @@ class Request extends Model
     {
          return $this->hasOne(CancellationReason::class, 'id', 'reason');
        
+    }
+    /**
+     * The Request Bids associated with the request's id.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function requestAllBids()
+    {
+        return $this->hasMany(TripBids::class, 'request_id', 'id');
     }
 }
