@@ -29,7 +29,8 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
         Route::get('promocode-list', 'PromoCodeController@index');
         // Create Request
         Route::post('create', 'CreateRequestController@createRequest');
-        // Change Drop Location
+
+       // Change Drop Location
         Route::post('change-drop-location', 'EtaController@changeDropLocation');
         // Cancel Request
         Route::post('cancel', 'UserCancelRequestController@cancelRequest');
@@ -47,6 +48,10 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
         Route::post('create-instant-ride','InstantRideController@createRequest');
         // Accet/Reject Request
         Route::post('respond', 'RequestAcceptRejectController@respondRequest');
+
+        // Create Bid
+         Route::post('create-bid', 'DriverTripStartedController@CreateBid');
+
         // Arrived
         Route::post('arrived', 'DriverArrivedController@arrivedRequest');
         // Trip started

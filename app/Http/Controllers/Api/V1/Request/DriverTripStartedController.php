@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 use App\Jobs\NotifyViaSocket;
 use App\Base\Constants\Masters\PushEnums;
 use App\Http\Controllers\Api\V1\BaseController;
+use App\Http\Requests\Request\CreateRequestBidRequest;
 use App\Models\Request\Request as RequestModel;
 use App\Jobs\Notifications\AndroidPushNotification;
+use App\Models\Request\TripBids;
 use App\Transformers\Requests\TripRequestTransformer;
 
 /**
@@ -112,5 +114,38 @@ class DriverTripStartedController extends BaseController
         if ($request_detail->is_cancelled) {
             $this->throwCustomException('request cancelled');
         }
+    }
+
+    /**
+     * Create/Update Bid for requested trip
+     * if bid_id isset then it will work as bid update
+    */
+    public function CreateBid(CreateRequestBidRequest $request){
+        if ($request->driver_id!=auth()->user()->driver->id) {
+            $this->throwAuthorizationException();
+        }       
+        $bid = new TripBids();  
+        $flag = false;
+        if($request->has('bid_id')){
+            $bid = TripBids::find($request->input('bid_id'));  
+            $flag = true;
+            if(!$bid){
+                $flag = false;
+                $bid = new TripBids();   
+            }
+        }
+        $bid->user_id = $request->input('user_id');
+        $bid->request_id = $request->input('request_id');
+        $bid->driver_id = $request->input('driver_id');
+        $bid->default_price = $request->input('default_price');
+        $bid->bid_price = $request->input('bid_price');
+
+        if($bid->save()){
+            if($flag){
+                return $this->respondSuccess(null, 'bid_updated_and_submitted_successfully');
+            };
+            return $this->respondSuccess(null, 'bid_submitted_successfully');
+
+        };
     }
 }
