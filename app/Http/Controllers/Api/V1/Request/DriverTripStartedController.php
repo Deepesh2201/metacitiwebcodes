@@ -13,6 +13,7 @@ use App\Models\Request\Request as RequestModel;
 use App\Jobs\Notifications\AndroidPushNotification;
 use App\Models\Request\TripBids;
 use App\Transformers\Requests\TripRequestTransformer;
+use Exception;
 
 /**
  * @group Driver-trips-apis
@@ -121,31 +122,49 @@ class DriverTripStartedController extends BaseController
      * if bid_id isset then it will work as bid update
     */
     public function CreateBid(CreateRequestBidRequest $request){
-        if ($request->driver_id!=auth()->user()->driver->id) {
+        /* if ($request->driver_id!=auth()->user()->driver->id) {
             $this->throwAuthorizationException();
-        }       
-        $bid = new TripBids();  
-        $flag = false;
-        if($request->has('bid_id')){
-            $bid = TripBids::find($request->input('bid_id'));  
-            $flag = true;
-            if(!$bid){
-                $flag = false;
-                $bid = new TripBids();   
+        }  */  
+        try {   
+            $bid = new TripBids();  
+            $flag = false;
+            if($request->has('bid_id')){
+                $bid = TripBids::find($request->input('bid_id'));  
+                $flag = true;
+                if(!$bid){
+                    $flag = false;
+                    $bid = new TripBids();   
+                }
             }
-        }
-        $bid->user_id = $request->input('user_id');
-        $bid->request_id = $request->input('request_id');
-        $bid->driver_id = $request->input('driver_id');
-        $bid->default_price = $request->input('default_price');
-        $bid->bid_price = $request->input('bid_price');
+            $bid->user_id = $request->input('user_id');
+            $bid->request_id = $request->input('request_id');
+            $bid->driver_id = $request->input('driver_id');
+            $bid->default_price = $request->input('default_price');
+            $bid->bid_price = $request->input('bid_price');
 
-        if($bid->save()){
-            if($flag){
-                return $this->respondSuccess(null, 'bid_updated_and_submitted_successfully');
+            if($bid->save()){
+                $data = [
+                    'bid_id' => $bid->id,
+                    'user_id' => $bid->user_id,
+                    'request_id' => $bid->request_id,
+                    'driver_id' => $bid->driver_id,
+                    'default_price' => $bid->default_price,
+                    'bid_price' => $bid->bid_price,
+                    'converted_updated_at' => $bid->converted_updated_at,
+                    'converted_created_at' => $bid->converted_created_at
+                ];
+                if($flag){
+                    return $this->respondSuccess($data, 'bid_updated_and_submitted_successfully');
+                };
+                return $this->respondSuccess($data, 'bid_submitted_successfully');
+
             };
-            return $this->respondSuccess(null, 'bid_submitted_successfully');
+            return $this->respondBadRequest('Unknown error occurred. Please try again.');
 
-        };
+        } catch (Exception $e) {
+            // $e->getMessage();
+            return $this->respondBadRequest('Unknown error occurred. Please try again.');
+        }
+
     }
 }
