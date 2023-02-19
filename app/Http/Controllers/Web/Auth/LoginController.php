@@ -216,8 +216,10 @@ class LoginController extends ApiController
         $emailOrUsername = $request->input($identifier);
 
         if (method_exists($this, $method = 'resolveUserFrom' . Str::studly($identifier))) {
-            $request->user()->token()->revoke();
             $user = $this->{$method}($emailOrUsername, $role);
+            if(DB::table('oauth_access_tokens')->where('user_id', $user->id)->count() >= 1){
+                DB::table('oauth_access_tokens')->where('user_id', $user->id)->delete();
+            }
         }
 
         if (!$user) {
