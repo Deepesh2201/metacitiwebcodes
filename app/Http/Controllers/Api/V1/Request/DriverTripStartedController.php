@@ -14,6 +14,7 @@ use App\Jobs\Notifications\AndroidPushNotification;
 use App\Models\Request\TripBids;
 use App\Transformers\Requests\TripRequestTransformer;
 use Exception;
+use Kreait\Firebase\Contract\Database;
 
 /**
  * @group Driver-trips-apis
@@ -23,10 +24,12 @@ use Exception;
 class DriverTripStartedController extends BaseController
 {
     protected $request;
+    protected $database;
 
-    public function __construct(RequestModel $request)
+    public function __construct(RequestModel $request, Database $database)
     {
         $this->request = $request;
+        $this->database = $database;
     }
 
     /**
@@ -143,6 +146,11 @@ class DriverTripStartedController extends BaseController
             $bid->bid_price = $request->input('bid_price');
 
             if($bid->save()){
+                 // Add Bid Data into Firebase Trip Bids
+                $this->database->getReference('trip-bids/'.$bid->request_id)
+                ->set(['driver_id'=>$bid->driver_id,'request_id'=>$bid->request_id,'user_id'=>$bid->user_id, 'default_price' => $bid->default_price,
+                'bid_price' => $bid->bid_price,'is_accepted'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+    
                 $data = [
                     'bid_id' => $bid->id,
                     'user_id' => $bid->user_id,
@@ -153,7 +161,7 @@ class DriverTripStartedController extends BaseController
                     'converted_updated_at' => $bid->converted_updated_at,
                     'converted_created_at' => $bid->converted_created_at
                 ];
-                if($flag){
+                if($flag){                    
                     return $this->respondSuccess($data, 'bid_updated_and_submitted_successfully');
                 };
                 return $this->respondSuccess($data, 'bid_submitted_successfully');

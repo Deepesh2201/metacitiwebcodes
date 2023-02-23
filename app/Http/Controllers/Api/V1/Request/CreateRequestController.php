@@ -30,6 +30,7 @@ use Kreait\Firebase\Contract\Database;
 class CreateRequestController extends BaseController
 {
     protected $request;
+    protected $database;
 
     public function __construct(Request $request,Database $database)
     {
