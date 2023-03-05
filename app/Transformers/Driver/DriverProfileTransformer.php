@@ -17,6 +17,9 @@ use App\Transformers\Requests\TripRequestTransformer;
 use App\Base\Constants\Setting\Settings;
 use App\Models\Admin\Sos;
 use App\Transformers\Common\SosTransformer;
+use App\Models\Request\TripBids;
+use App\Transformers\Requests\RequestTripBidTransformer;
+
 
 class DriverProfileTransformer extends Transformer
 {
@@ -26,7 +29,7 @@ class DriverProfileTransformer extends Transformer
      * @var array
      */
     protected array $availableIncludes = [
-        'onTripRequest','metaRequest'
+        'onTripRequest','metaRequest', 'tripBid'
     ];
 
     /**
@@ -216,6 +219,25 @@ class DriverProfileTransformer extends Transformer
         ? $this->item($request, new TripRequestTransformer)
         : $this->null();
         }
+        return $this->null();
+    }
+
+        /**
+    * Include the trip bid of the request.
+    *
+    * @param RequestModel $request
+    * @return \League\Fractal\Resource\Item|\League\Fractal\Resource\NullResource
+    */
+    public function includeTripBid(Driver $user)
+    {
+        $request_meta = RequestMeta::where('driver_id', $user->id)->where('active', true)->first();
+        if($request_meta){
+            $requestTripBid = TripBids::where(['request_id'=>$request_meta->request_id, 'driver_id'=>$request_meta->driver_id])->first();
+            return $requestTripBid
+            ? $this->item($requestTripBid, new RequestTripBidTransformer)
+            : $this->null();
+        }
+       
         return $this->null();
     }
 }

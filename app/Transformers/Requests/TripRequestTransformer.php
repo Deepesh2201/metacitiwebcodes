@@ -8,7 +8,6 @@ use App\Transformers\Driver\DriverTransformer;
 use App\Models\Request\Request as RequestModel;
 use App\Transformers\User\AdHocUserTransformer;
 use App\Transformers\Requests\RequestBillTransformer;
-use App\Transformers\Requests\RequestTripBidTransformer;
 use Carbon\Carbon;
 use App\Base\Constants\Masters\PaymentType;
 use App\Base\Constants\Setting\Settings;
@@ -22,7 +21,7 @@ class TripRequestTransformer extends Transformer
      * @var array
      */
     protected array $availableIncludes = [
-        'driverDetail','userDetail','requestBill', 'tripBid'
+        'driverDetail','userDetail','requestBill'
     ];
 
     /**
@@ -226,20 +225,6 @@ class TripRequestTransformer extends Transformer
 
         return $requestBill
         ? $this->item($requestBill, new RequestBillTransformer)
-        : $this->null();
-    }
-    /**
-    * Include the trip bid of the request.
-    *
-    * @param RequestModel $request
-    * @return \League\Fractal\Resource\Item|\League\Fractal\Resource\NullResource
-    */
-    public function includeTripBid(RequestModel $request)
-    {
-        $requestTripBid = $request->requestTripBid;
-
-        return $requestTripBid
-        ? $this->item($requestTripBid, new RequestTripBidTransformer)
         : $this->null();
     }
 }

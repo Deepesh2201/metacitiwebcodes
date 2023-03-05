@@ -398,6 +398,6 @@ class Request extends Model
      */
     public function requestTripBid()
     {
-        return $this->has(RequestMeta::class, 'request_id', 'id');
+        return $this->hasOne(TripBids::class, 'request_id', 'id');
     }
 }
