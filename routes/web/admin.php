@@ -135,7 +135,7 @@ Route::middleware('auth:web')->group(function () {
         Route::get('toggle_approve/{driver}', 'DriverController@toggleApprove');
         Route::get('toggle_available/{driver}', 'DriverController@toggleAvailable');
         Route::get('delete/{driver}', 'DriverController@delete');
-        Route::get('document/view/{driver}', 'DriverDocumentController@index')->name('companyDriverDocumentView');
+        // Route::get('document/view/{driver}', 'DriverDocumentController@index')->name('companyDriverDocumentView');
         Route::get('get/carmodel', 'DriverController@getCarModel')->name('getCarModel');
         Route::get('profile/{driver}', 'DriverController@profile');
         Route::get('hire/view', 'DriverController@hireDriverView')->name('hireDriverView');
@@ -200,7 +200,9 @@ Route::middleware('auth:web')->group(function () {
 
         Route::group(['prefix' => 'company',  'middleware' => 'permission:view-companies'], function () {
             // prefix('company')->group(function () {
-            Route::get('/', 'CompanyController@index');
+           /* 
+        //    CompanyController NOT FOUND
+           Route::get('/', 'CompanyController@index');
             Route::get('/fetch', 'CompanyController@getAllCompany');
             Route::get('by/admin', 'CompanyController@byAdmin');
             Route::get('/create', 'CompanyController@create');
@@ -208,7 +210,7 @@ Route::middleware('auth:web')->group(function () {
             Route::get('edit/{company}', 'CompanyController@getById');
             Route::post('update/{company}', 'CompanyController@update');
             Route::get('toggle_status/{company}', 'CompanyController@toggleStatus');
-            Route::get('delete/{company}', 'CompanyController@delete');
+            Route::get('delete/{company}', 'CompanyController@delete'); */
         });
 
 //drivers
@@ -235,11 +237,14 @@ Route::middleware('auth:web')->group(function () {
         Route::get('toggle_approve/{driver}/{approval_status}', 'DriverController@toggleApprove');
         Route::get('toggle_available/{driver}', 'DriverController@toggleAvailable');
         Route::get('delete/{driver}', 'DriverController@delete');
+        /* //DriverDocumentController not found 
         Route::get('document/view/{driver}', 'DriverDocumentController@index');
         Route::get('upload/document/{driver}/{needed_document}', 'DriverDocumentController@documentUploadView');
         Route::post('upload/document/{driver}/{needed_document}', 'DriverDocumentController@uploadDocument');
         Route::post('approve/documents', 'DriverDocumentController@approveDriverDocument')->name('approveDriverDocument');
-        Route::get('get/carmodel', 'DriverController@getCarModel')->name('getCarModel');
+         */
+        
+         Route::get('get/carmodel', 'DriverController@getCarModel')->name('getCarModel');
         Route::post('update/decline/reason', 'DriverController@UpdateDriverDeclineReason')->name('UpdateDriverDeclineReason');
        
         });
@@ -281,11 +286,15 @@ Route::middleware('auth:web')->group(function () {
         Route::get('toggle_approve/{driver}/{approval_status}', 'FleetDriverController@toggleApprove');
         Route::get('toggle_available/{driver}', 'FleetDriverController@toggleAvailable');
         Route::get('delete/{driver}', 'FleetDriverController@delete');
+        /* 
+        //DriverDocumentController NOT FOUND
         Route::get('document/view/{driver}', 'FleetDriverDocumentController@index');
         Route::get('upload/document/{driver}/{needed_document}', 'FleetDriverDocumentController@documentUploadView');
         Route::post('upload/document/{driver}/{needed_document}', 'FleetDriverDocumentController@uploadDocument');
         Route::post('approve/documents', 'FleetDriverDocumentController@approveFleetDriverDocument')->name('approveFleetDriverDocument');
-        Route::get('get/carmodel', 'FleetDriverController@getCarModel')->name('getCarModel');
+         */
+        
+         Route::get('get/carmodel', 'FleetDriverController@getCarModel')->name('getCarModel');
         Route::post('update/decline/reason', 'FleetDriverController@UpdateDriverDeclineReason')->name('UpdateFleetDriverDeclineReason');
        
         });

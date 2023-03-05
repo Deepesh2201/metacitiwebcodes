@@ -125,9 +125,9 @@ class DriverTripStartedController extends BaseController
      * if bid_id isset then it will work as bid update
     */
     public function CreateBid(CreateRequestBidRequest $request){
-        /* if ($request->driver_id!=auth()->user()->driver->id) {
+        if ($request->driver_id!=auth()->user()->driver->id) {
             $this->throwAuthorizationException();
-        }  */  
+        }   
         try {   
             $bid = new TripBids();  
             $flag = false;
@@ -142,21 +142,22 @@ class DriverTripStartedController extends BaseController
             $bid->user_id = $request->input('user_id');
             $bid->request_id = $request->input('request_id');
             $bid->driver_id = $request->input('driver_id');
-            $bid->default_price = $request->input('default_price');
+            $bid->request_eta_amount = $request->input('request_eta_amount');
             $bid->bid_price = $request->input('bid_price');
 
             if($bid->save()){
                  // Add Bid Data into Firebase Trip Bids
                 $this->database->getReference('trip-bids/'.$bid->request_id)
-                ->set(['driver_id'=>$bid->driver_id,'request_id'=>$bid->request_id,'user_id'=>$bid->user_id, 'default_price' => $bid->default_price,
-                'bid_price' => $bid->bid_price,'is_accepted'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
+                ->set(['driver_id'=>$bid->driver_id,'request_id'=>$bid->request_id,'user_id'=>$bid->user_id, 'request_eta_amount' => $bid->request_eta_amount,
+                'bid_price' => $bid->bid_price,'status'=>0,'updated_at'=> Database::SERVER_TIMESTAMP]);
     
                 $data = [
                     'bid_id' => $bid->id,
                     'user_id' => $bid->user_id,
                     'request_id' => $bid->request_id,
                     'driver_id' => $bid->driver_id,
-                    'default_price' => $bid->default_price,
+                    'request_eta_amount' => $bid->request_eta_amount,
+                    'status' => $bid->status,
                     'bid_price' => $bid->bid_price,
                     'converted_updated_at' => $bid->converted_updated_at,
                     'converted_created_at' => $bid->converted_created_at

@@ -1047,7 +1047,7 @@ if (!function_exists('role_middleware')) {
      */
     function role_middleware($roles, $requireAll = false, $middlewareName = 'role')
     {
-        return true;
+        // return true;
         $string = $middlewareName . ':' . implode('|', array_wrap($roles));
 
         return $requireAll ? $string . ',true' : $string;

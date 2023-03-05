@@ -50,7 +50,7 @@ class Request extends Model
      * @var array
      */
     public $includes = [
-        'driverDetail','userDetail','requestBill'
+        'driverDetail','userDetail','requestBill', 'requestTripBid'
     ];
 
     public $sortable = ['trip_start_time', 'created_at', 'updated_at'];
@@ -389,5 +389,15 @@ class Request extends Model
     public function requestAllBids()
     {
         return $this->hasMany(TripBids::class, 'request_id', 'id');
+    }
+
+    /**
+     * The Request Trip Bid with the request's id.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\hasOne
+     */
+    public function requestTripBid()
+    {
+        return $this->has(RequestMeta::class, 'request_id', 'id');
     }
 }

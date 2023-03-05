@@ -20,7 +20,7 @@ class CreateTripBidsTable extends Migration
             $table->unsignedInteger('driver_id');
             $table->double('default_price', 10, 2)->default(0);
             $table->double('bid_price', 10, 2)->default(0);
-            $table->boolean('is_accepted')->default(0);
+            $table->tinyInteger('status')->default(0)->comment('0=>pending,1=>accepted, 2=>accepted by others, 3=>canceled by driver,4=>canceled by user');
             $table->timestamps();
 
             $table->foreign('request_id')

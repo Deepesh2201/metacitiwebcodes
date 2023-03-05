@@ -30,6 +30,9 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
         // Create Request
         Route::post('create', 'CreateRequestController@createRequest');
 
+         // user Accept/Reject Bid
+         Route::post('user-respond', 'CreateRequestController@respondBid');
+        
        // Change Drop Location
         Route::post('change-drop-location', 'EtaController@changeDropLocation');
         // Cancel Request
@@ -46,7 +49,7 @@ Route::prefix('request')->namespace('Request')->middleware('auth')->group(functi
     Route::middleware(role_middleware(Role::DRIVER))->group(function () {
         // Create Instant Ride
         Route::post('create-instant-ride','InstantRideController@createRequest');
-        // Accet/Reject Request
+        // Accept/Reject Request
         Route::post('respond', 'RequestAcceptRejectController@respondRequest');
         // Create Bid
         Route::match(['post','put'], 'create-bid', 'DriverTripStartedController@CreateBid');

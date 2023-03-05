@@ -47,8 +47,9 @@ Route::namespace('Common')->group(function () {
             Route::post('make-complaint', 'ComplaintsController@makeComplaint');
         });
     });
+    /* Note-> CompanyKeyController not found so commented  */
     // Validate Company key api
-    Route::post('validate-company-key', 'CompanyKeyController@validateCompanyKey');
+    // Route::post('validate-company-key', 'CompanyKeyController@validateCompanyKey');
 });
 
 Route::namespace('VehicleType')->prefix('types')->group(function () {

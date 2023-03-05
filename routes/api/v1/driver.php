@@ -21,9 +21,10 @@ use App\Base\Constants\Auth\Role;
 Route::prefix('driver')->namespace('Driver')->middleware('auth')->group(function () {
     Route::middleware(role_middleware([Role::DRIVER,Role::OWNER]))->group(function () {
         // get DriverDocument
+        /*  // Note-> DriverDocumentController not found so commented  
         Route::get('documents/needed', 'DriverDocumentController@index');
         // Upload Driver document
-        Route::post('upload/documents', 'DriverDocumentController@uploadDocuments');
+        Route::post('upload/documents', 'DriverDocumentController@uploadDocuments'); */
         // List All Uploaded Documents
         // Route::get('uploaded/documents', 'DriverDocumentController@listUploadedDocuments');
         // Online-offline

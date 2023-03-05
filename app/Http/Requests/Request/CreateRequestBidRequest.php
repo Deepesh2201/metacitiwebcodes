@@ -27,7 +27,7 @@ class CreateRequestBidRequest extends FormRequest
             'request_id'=>'required|exists:requests,id',
             'user_id'=>'required|integer',
             'driver_id'=>'required|integer',
-            'default_price'=>'required|double',
+            'request_eta_amount'=>'nullable|double',
             'bid_price'=>'required|double'
         ];
     }

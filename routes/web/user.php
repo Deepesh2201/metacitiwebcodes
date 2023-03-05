@@ -14,8 +14,8 @@
  */
 
 Route::prefix('web-user')->namespace ('User')->group(function () {
-
-    Route::get('login', 'WebUserControllerController@viewLogin');
+//WebUserControllerController NOT FOUND
+    // Route::get('login', 'WebUserControllerController@viewLogin');
 
 
 });
